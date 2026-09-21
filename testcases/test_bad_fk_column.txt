@@ -1,0 +1,2 @@
+department(deptid(pk),deptname)
+employee(empid(pk),deptid(fk:department.fakecolumn))

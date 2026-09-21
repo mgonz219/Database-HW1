@@ -1,0 +1,2 @@
+department(deptid,deptname,location)
+employee(empid(pk),name,deptid(fk:department.deptid))

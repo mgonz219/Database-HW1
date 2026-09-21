@@ -1,0 +1,6 @@
+department(deptid(pk),deptname,location)
+employee(empid(pk),name,deptid(fk:department.deptid),managerid)
+project(projectid(pk),projectname,deptid(fk:department.deptid))
+assignment(assignid(pk),empid(fk:employee.empid),projectid(fk:project.projectid),hours)
+customer(customerid(pk),name,email)
+orders(orderid(pk),customerid(fk:customer.customerid),employeeid(fk:employee.empid),status)

@@ -1,0 +1,3 @@
+department(deptid(pk),deptname)
+employee(empid(pk),name)
+assignment(assignid(pk),empid(fk:employee.empid),deptid(fk:department.deptid),hours)

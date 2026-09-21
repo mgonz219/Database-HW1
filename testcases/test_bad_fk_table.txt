@@ -1,0 +1,1 @@
+employee(empid(pk),name,deptid(fk:fake_department.deptid))
