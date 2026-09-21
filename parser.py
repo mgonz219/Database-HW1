@@ -50,9 +50,9 @@ def parse_table(line):
         return None
     
     open_paren = line.find("(")
-    close_paren = line.find(")")
+    close_paren = line.rfind(")")
 
-    if open_param == -1 or close_paren == -1:
+    if open_paren == -1 or close_paren == -1:
         raise ValueError(f"Invalid table definition: {line}")
     
     table_name = line[:open_paren].strip().lower()
@@ -69,7 +69,7 @@ def parse_table(line):
         
         if char == "," and depth == 0:
             columns.append(current.strip())
-            current - ""
+            current = ""
         else:
             current += char
     
