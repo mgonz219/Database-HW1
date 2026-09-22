@@ -30,8 +30,7 @@ def validate_tables(tables):
             # Referenced table must exist
             if ref_table not in tables:
                 print(
-                    f"Error: referenced table {ref_table} "
-                    f"does not exist for foreign key "
+                    f"Error: referenced table {ref_table} does not exist for foreign key "
                     f"{table_name}.{fk['column']}"
                 )
                 valid = False
