@@ -4,21 +4,36 @@ from parser import parse_input_file
 from validation import validate_tables
 from database import connect_database, validate_database_schema
 
-filename = sys.argv[1]
-tables = parse_input_file(filename) 
-tables = validate_tables(tables)
 
-conn = connect_database()
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python checkdb.py <input_file>")
+        sys.exit(1)
 
-if conn is None:
-    sys.exit()
+    filename = sys.argv[1]
 
-tables = validate_database_schema(conn,tables)
+    # Parse the input 
+    tables = parse_input_file(filename)
 
-for name, table in tables.items():
-    print(name, table)
+    # Validate the information from the input file
+    tables = validate_tables(tables)
 
-for name, table in tables.items():
-    print(name, table)
+    # Connect to database
+    conn = connect_database()
 
-conn.close()
+    if conn is None:
+        sys.exit(1)
+
+    try:
+        tables = validate_database_schema(conn, tables)
+
+        # Temporary output while building/testing
+        for name, table in tables.items():
+            print(name, table)
+
+    finally:
+        conn.close()
+
+
+if __name__ == "__main__":
+    main()
