@@ -37,7 +37,11 @@ SELECT EXISTS (
 """
 
     with conn.cursor() as cursor:
-        cursor.execute(query, (table_name,))
+        cursor.execute(
+            query,
+            (table_name,)
+        )
+
         result = cursor.fetchone()
 
     return result[0]
@@ -57,7 +61,10 @@ SELECT EXISTS (
     with conn.cursor() as cursor:
         cursor.execute(
             query,
-            (table_name, column_name)
+            (
+                table_name,
+                column_name
+            )
         )
 
         result = cursor.fetchone()
@@ -80,7 +87,6 @@ def validate_database_schema(conn, tables):
         valid = True
 
         for column in table["columns"]:
-
             if not column_exists(
                 conn,
                 table_name,

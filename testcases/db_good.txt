@@ -1,1 +1,2 @@
-airports(airport_code(pk),airport_name,city)
+t1(a(pk),b,c,d,e)
+student(student_id(pk),name,major,admit_year)
