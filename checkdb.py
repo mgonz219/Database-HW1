@@ -5,6 +5,36 @@ from parser import parse_input_file
 from validation import validate_tables
 from database import connect_database, validate_database_schema
 from referential import check_referential_integrity
+from normalization import checkNorm
+
+def writeOutput(filename, ri_results, norm_results):
+    input_name = os.path.basename(filename)
+    input_stem = os.path.splittext(input_name)[0]
+
+    output_name = f"refintnorm-{input_stem}.txt"
+
+    dbRIValid = all(
+        res == "Y" for res in ri_results.values()
+    )
+
+    dbNormValid = all(
+        res == "Y" for res in norm_results.values()
+    )
+
+    allSorted = sorted(set(ri_results.keys()) | set(norm_results.keys()))
+
+    with open(output_name, "w") as file:
+        file.write(f"{'':<8}{'ref.integrity':<16}{'normalized':<10}\n")
+        for table_name in allSorted:
+            ri = ri_results.get(table_name, "N")
+            norm = norm_results.get(table_name, "N")
+
+            file.write(f"{table_name:<8}{ri:^13}{norm:^16}\n")
+        file.write("\n")
+        file.write(f"DB referential integrity: {'Y' if dbRIValid else 'N'}\n")
+        file.write(f"DB normalized: {'Y' if dbNormValid else 'N'}\n")
+
+    return output_name
 
 
 def write_ri_output(filename, ri_results):
@@ -65,10 +95,21 @@ def main():
             tables
         )
 
-        output_file = write_ri_output(
-            filename,
-            ri_results
+        norm_results = checkNorm(
+            conn,
+            tables
         )
+
+        output_file = writeOutput(
+            filename,
+            ri_results,
+            norm_results
+        )
+
+        # output_file = write_ri_output(
+        #     filename,
+        #     ri_results
+        # )
 
         print(
             f"Output written to {output_file}"
