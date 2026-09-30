@@ -9,7 +9,7 @@ from normalization import checkNorm
 
 def writeOutput(filename, ri_results, norm_results):
     input_name = os.path.basename(filename)
-    input_stem = os.path.splittext(input_name)[0]
+    input_stem = os.path.splitext(input_name)[0]
 
     output_name = f"refintnorm-{input_stem}.txt"
 
